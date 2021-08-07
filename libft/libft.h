@@ -39,4 +39,7 @@ int		ft_isprint(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 
+//--------ADDITIONAL FUNCTIONS--------//
+void	*ft_memalloc(size_t size);
+
 #endif
