@@ -13,9 +13,3 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 	ft_putchar_fd(n % 10 + 48, fd);
 }
-
-
-int main(void)
-{
-	ft_putnbr_fd(1234567, 1);
-}
