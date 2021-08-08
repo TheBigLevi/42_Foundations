@@ -7,6 +7,13 @@
 
 # define ISSPACE(c) (c==' '||c=='\t'||c=='\n'||c=='\r'||c=='\f'||c=='\v')
 
+typedef struct	s_list
+{
+	void			*content;
+	struct s_list	*next;
+}				t_list;
+
+
 void	*ft_memset(void *str, int c, size_t n);
 void	ft_bzero(void *str, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
@@ -46,5 +53,8 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *str, int fd);
 void	ft_putendl_fd(char *str, int fd);
 void	ft_putnbr_fd(int n, int fd);
+
+//--------BONUS FUNCTIONS--------//
+t_list	*ft_lstnew(void *content);
 
 #endif
