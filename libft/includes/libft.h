@@ -40,6 +40,6 @@ int		ft_toupper(int c);
 int		ft_tolower(int c);
 
 //--------ADDITIONAL FUNCTIONS--------//
-void	*ft_memalloc(size_t size);
+void	*ft_calloc(size_t count, size_t size);
 
 #endif
