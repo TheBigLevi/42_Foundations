@@ -3,7 +3,7 @@
 char	*ft_substr(char const *str, unsigned int start, size_t len)
 {	
 	char	*dest;
-	int		maxlen;
+	size_t	maxlen;
 
 	if (str == NULL)
 		return (NULL);
@@ -13,7 +13,7 @@ char	*ft_substr(char const *str, unsigned int start, size_t len)
 	if (dest == NULL)
 		return (NULL);
 	maxlen = 0;
-	if (str[start + maxlen] != NULL && maxlen < len)
+	if (str[start + maxlen] != '\0' && maxlen < len)
 		maxlen++;
 	ft_memcpy(dest, str + start, maxlen);
 	dest[maxlen] = '\0';
