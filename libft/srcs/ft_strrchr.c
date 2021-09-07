@@ -2,16 +2,19 @@
 
 char	*ft_strrchr(const char *str, int c)
 {
-	size_t	i;
-	char	*chr;
+	char	*chrpos;
 
-	i = ft_strlen(str) + 1;
-	chr = NULL;
-	while (i > 0)
+	chrpos = NULL;
+	if (str != NULL)
 	{
-		if (str[i] == c)
-			return ((char *)(str + i));
-		i--;
+		while (*str != '\0')
+		{
+			if (*str == (char)c)
+				chrpos = (char *)str;
+			str++;
+		}
 	}
-	return (chr);
+	if (*str == (char)c)
+		chrpos = (char *)str;
+	return (chrpos);
 }

@@ -1,19 +1,52 @@
 #include "libft.h"
 
+static int	ft_start(char const *str, char const *set)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (ft_strchr(set, str[i]) == 0)
+			return (i);
+		i++;
+	}
+	return (i);
+}
+
+static int	ft_end(char const *str, char const *set)
+{
+	size_t	len;
+	size_t	i;
+
+	len = ft_strlen(str) - 1;
+	i = 0;
+	while (i < len)
+	{
+		if (ft_strchr(set, str[len - i]) == 0)
+			break ;
+		i++;
+	}
+	return (len - i + 1);
+}
+
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*str;
-	size_t	i;
-	size_t	j;
+	int		start;
+	int		end;
 
-	i = 0;
-	j = 0;
-	if (s1 == NULL || set == NULL)
+	if (s1 == NULL)
 		return (NULL);
-	while (s1[i] != '\0' && ft_strchr(set, s1[i]) != 0)
-		i++;
-	while (s1[i + j] != '\0' && ft_strchr(set, s1[i + j]) != 0)
-		j++;
-	str = ft_substr(s1, i, j + 1);
+	else if (set == NULL)
+		return (ft_strdup(s1));
+	start = ft_start(s1, set);
+	end = ft_end(s1, set);
+	if (start >= end)
+		return (ft_strdup(""));
+	str = (char *)malloc(sizeof(char) * (end - start + 1));
+	if (str == NULL)
+		return (NULL);
+	ft_strlcpy(str, s1 + start, end - start + 1);
 	return (str);
 }

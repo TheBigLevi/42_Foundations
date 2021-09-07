@@ -49,23 +49,27 @@ BONUS 	= bonus/ft_lstnew.c \
 		bonus/ft_lstiter.c \
 		bonus/ft_lstmap.c \
 
-OBJS = ${SRCS:.c=.o}
+OBJS = $(SRCS:.c=.o)
+OBJS_B = $(BONUS:.c=.o)
 
 
 .PHONY: bonus all clean fclean re
 
 %.o: %.c
-		${CC} -c ${CFLAGS} -I includes $< -o ${<:.c=.o}
+		${CC} -c $(CFLAGS) -I includes $< -o $(<:.c=.o)
 
-all: ${NAME}
+all: $(NAME)
 
-${NAME}: ${OBJS}
-		ar -rcs ${NAME} ${OBJS}
+$(NAME): $(OBJS)
+		ar -rcs $(NAME) $(OBJS)
+
+bonus:  $(OBJS) $(OBJS_B)
+		ar -rcs $(NAME) $(OBJS) $(OBJS_B)
 
 clean:
-	rm -f ${OBJS}
+	rm -f $(OBJS) $(OBJS_B)
 
 fclean: clean
-		rm -f ${NAME}
+		rm -f $(NAME)
 
 re: fclean all
