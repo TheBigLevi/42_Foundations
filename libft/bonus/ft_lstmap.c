@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lread <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,17 +12,24 @@
 
 #include "libft.h"
 
-int	ft_lstsize(t_list *lst)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	size_t	i;
-	t_list	*node;
+	t_list	*head;
+	t_list	*element;
 
-	i = 0;
-	node = lst;
-	while (node != NULL)
+	if (lst == NULL || f == NULL || del == NULL)
+		return (NULL);
+	head = NULL;
+	while (lst != NULL)
 	{
-		node = node->next;
-		i++;
+		element = ft_lstnew(f(lst->content));
+		if (element == NULL)
+		{
+			ft_lstclear(&head, del);
+			return (NULL);
+		}
+		lst = lst->next;
+		ft_lstadd_back(&head, element);
 	}
-	return (i);
+	return (head);
 }
