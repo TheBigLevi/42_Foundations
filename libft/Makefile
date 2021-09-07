@@ -1,7 +1,3 @@
-CC 	= gcc
-CFLAGS = -Werror -Wextra -Wall
-NAME = libft.a
-
 SRCS = srcs/ft_isalpha.c \
 		srcs/ft_isdigit.c \
 		srcs/ft_isalnum.c \
@@ -14,10 +10,8 @@ SRCS = srcs/ft_isalpha.c \
 		srcs/ft_memmove.c \
 		srcs/ft_strlcpy.c \
 		srcs/ft_strlcat.c \
-		srcs/ft_strncat.c \
 		srcs/ft_toupper.c \
 		srcs/ft_tolower.c \
-		srcs/ft_strcat.c \
 		srcs/ft_strchr.c \
 		srcs/ft_strrchr.c \
 		srcs/ft_strncmp.c \
@@ -39,6 +33,8 @@ SRCS = srcs/ft_isalpha.c \
 		srcs/ft_putendl_fd.c \
 		srcs/ft_putnbr_fd.c \
 
+OBJS = $(SRCS:.c=.o)
+
 BONUS 	= bonus/ft_lstnew.c \
 		bonus/ft_lstadd_front.c \
 		bonus/ft_lstsize.c \
@@ -46,12 +42,16 @@ BONUS 	= bonus/ft_lstnew.c \
 		bonus/ft_lstadd_back.c \
 		bonus/ft_lstdelone.c \
 		bonus/ft_lstclear.c \
-		bonus/ft_lstiter.c \
 		bonus/ft_lstmap.c \
+		bonus/ft_lstiter.c \
+		
+		
 
-OBJS = $(SRCS:.c=.o)
 OBJS_B = $(BONUS:.c=.o)
 
+CC 	= gcc
+CFLAGS = -Werror -Wextra -Wall
+NAME = libft.a
 
 .PHONY: bonus all clean fclean re
 
