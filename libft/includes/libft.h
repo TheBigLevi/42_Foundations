@@ -17,8 +17,6 @@
 # include <unistd.h>
 # include <string.h>
 
-# define ISSPACE(c) (c==' '||c=='\t'||c=='\n'||c=='\r'||c=='\f'||c=='\v')
-
 typedef struct s_list
 {
 	void			*content;

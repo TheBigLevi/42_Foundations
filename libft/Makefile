@@ -31,7 +31,7 @@ SRCS = srcs/ft_isalpha.c \
 		srcs/ft_putchar_fd.c \
 		srcs/ft_putstr_fd.c \
 		srcs/ft_putendl_fd.c \
-		srcs/ft_putnbr_fd.c \
+		srcs/ft_putnbr_fd.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -43,9 +43,7 @@ BONUS 	= bonus/ft_lstnew.c \
 		bonus/ft_lstdelone.c \
 		bonus/ft_lstclear.c \
 		bonus/ft_lstmap.c \
-		bonus/ft_lstiter.c \
-		
-		
+		bonus/ft_lstiter.c
 
 OBJS_B = $(BONUS:.c=.o)
 
