@@ -1,5 +1,17 @@
 #include "get_next_line.h"
 
+int	ft_strlen(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}
+
 char *get_next_line(int fd)
 {
 	char	buf[BUFF_SIZE + 1];

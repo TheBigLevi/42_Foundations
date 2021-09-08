@@ -17,18 +17,15 @@ static char	*ft_strchr(const char *str, int c)
 	return (NULL);
 }
 
-int	ft_strlen(char *str)
+void	ft_overwrite(char *line, int i, int *j)
 {
-	int i;
-
-	i = 0;
-	while (str[i] != '\0')
+	while (line[i] != '\0')
 	{
+		line[*j] = line[i];
 		i++;
+		*j += 1;
 	}
-	return (i);
 }
-
 
 char	*ft_strtrim(char *line, char c)
 {
@@ -42,18 +39,23 @@ char	*ft_strtrim(char *line, char c)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (line[i] != '\0' && line[i] != '\n')
-	{
-		str[i] = line[i];
-		i++;
-	}
-	str[i] = '\0';
 	while (line[i] != '\0')
 	{
-		line[j] = line[i];
+		str[i] = line[i];
+		if (line[i + 1] == '\n')
+		{
+			str[i + 1] = '\n';
+			str[i + 2] = '\0';
+			break ;
+		}
+		else if (line[i + 1] == '\0')
+		{
+			str[i + 1] = '\0';
+			break ;
+		}
 		i++;
-		j++;
 	}
+	ft_overwrite(line, i, &j);
 	line[j] = '\0';
 	return (str);
 }
