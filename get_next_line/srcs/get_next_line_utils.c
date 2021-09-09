@@ -1,9 +1,8 @@
 #include "get_next_line.h"
 
-
 static char	*ft_strchr(const char *str, int c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -29,11 +28,11 @@ void	ft_overwrite(char *line, int i, int *j)
 
 char	*ft_strtrim(char *line, char c)
 {
-	int i;
-	int j;
-	char *str;
-	char *tmp;
-	
+	int		i;
+	int		j;
+	char	*str;
+	char	*tmp;
+
 	str = (char *)malloc(sizeof(char) * (ft_strlen(line) + 1));
 	if (str == NULL)
 		return (NULL);
