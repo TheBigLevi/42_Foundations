@@ -1,6 +1,6 @@
 #include "get_next_line.h"
 
-void	ft_overwrite(char **line, int i, int fd)
+static void	ft_overwrite(char **line, int i, int fd)
 {
 	int	j;
 
