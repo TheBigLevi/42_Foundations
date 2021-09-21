@@ -1,53 +1,94 @@
 #include "get_next_line.h"
 
-int	ft_strlen(char *str)
+static char	*ft_append(char *line, char *buf)
 {
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
+	if (line == NULL)
+		return (ft_strdup(buf));
+	else
+		return (ft_strjoin(line, buf));
 }
 
-char	*ft_strdup(char *str)
+static char	*ft_overwrite(char *line)
 {
-	char	*dest;
 	int		i;
+	int		j;
+	char	*str;
 
-	i = 0;
-	dest = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
-	if (dest == NULL)
-		return (NULL);
-	while (str[i] != '\0')
+	if (ft_strchr(line, '\n') == 0)
 	{
-		dest[i] = str[i];
-		i++;
+		free(line);
+		return (NULL);
 	}
-	dest[i] = '\0';
-	return (dest);
+	str = (char *)malloc(sizeof(char) * (ft_strlen(line) + 1));
+	if (str == NULL)
+		return (NULL);
+	j = 0;
+	i = 0;
+	while (line[i] != '\n')
+		i++;
+	i++;	
+	while (i + j < ft_strlen(line) && line[i + j] != '\0')
+	{
+		str[j] = line[i + j];
+		j++;
+	}
+	str[j] = '\0';
+	free(line);
+	return (str);
+}
+
+static char	*ft_trim(char *line)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	if (line == NULL || line[0] == '\0')
+		return (NULL);
+	else if (ft_strchr(line, '\n') == 0)
+		return (ft_strdup(line));
+	i = 0;
+	j = 0;
+	while (line[i] != '\0' && line[i] != '\n')
+		i++;
+	if (line[i] == '\n')
+		i++;
+	str = (char *)malloc(sizeof(char) * (i + 1));
+	if (str == NULL)
+		return (NULL);
+	str[i] = '\0';
+	while (line[j] != '\0')
+	{
+		str[j] = line[j];
+		if (line[j] == '\n')
+			break ;
+		j++;
+	}
+	return (str);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*line[FOPEN_MAX];
-	char		buf[BUFFER_SIZE + 1];
-	int			r;
+	static char	*line[1024];
+	char		*buf;
+	ssize_t		r;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	if (line[fd] == NULL)
-	{
-		line[fd] = ft_strdup("");
-		if (line[fd] == NULL)
-			return (NULL);
-	}
-	r = ft_readline(fd, buf, line);
-	if (r < 0)
+	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (buf == NULL)
 		return (NULL);
-	else if (r > 0)
-		return (ft_trim(line, fd));
-	return (line[fd]);
+	r = 1;
+	while (ft_strchr(line[fd], '\n') == 0 && r != 0)
+	{
+		r = read(fd, buf, BUFFER_SIZE);
+		if (r < 0)
+			break ;
+		buf[r] = '\0';
+		line[fd] = ft_append(line[fd], buf);
+	}
+	free(buf);
+	buf = ft_trim(line[fd]);
+	line[fd] = ft_overwrite(line[fd]);
+	return (buf);
 }

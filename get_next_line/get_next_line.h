@@ -3,12 +3,11 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
 
 char	*get_next_line(int fd);
-int		ft_strlen(char *str);
-int		ft_readline(int fd, char *buf, char **line);
-char	*ft_trim(char **line, int fd);
+char	*ft_strjoin(char *line, char *buf);
 char	*ft_strdup(char *str);
+int		ft_strchr(char *str, int c);
+int		ft_strlen(char *str);
 
 #endif
