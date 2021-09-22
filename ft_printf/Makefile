@@ -27,7 +27,8 @@ clean:
 	$(MAKE) clean -C ./libft
 	rm -f $(OBJS)
 
-fclean: clean
-	rm -f $(NAME)
+fclean:
+	$(MAKE) fclean -C ./libft
+	rm -f $(NAME) $(OBJS)
 
 re: fclean all
