@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lread <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/22 18:37:24 by lread             #+#    #+#             */
+/*   Updated: 2021/09/22 18:37:24 by lread            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*ft_strjoin(char *line, char *buf)
@@ -29,6 +41,7 @@ char	*ft_strjoin(char *line, char *buf)
 int	ft_strchr(char *str, int c)
 {
 	int	i;
+
 	if (str == NULL)
 		return (0);
 	i = 0;
@@ -55,11 +68,10 @@ char	*ft_strdup(char *str)
 	while (str[i] != '\0')
 	{
 		dest[i] = str[i];
-
 		i++;
 	}
 	dest[i] = '\0';
-	return (dest);	
+	return (dest);
 }
 
 int	ft_strlen(char *str)
@@ -69,7 +81,7 @@ int	ft_strlen(char *str)
 	i = 0;
 	if (str == NULL)
 		return (i);
-	while(str[i] != '\0')
+	while (str[i] != '\0')
 		i++;
 	return (i);
 }

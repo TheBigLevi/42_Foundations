@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lread <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/22 18:37:24 by lread             #+#    #+#             */
+/*   Updated: 2021/09/22 18:37:24 by lread            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 static char	*ft_append(char *line, char *buf)
@@ -26,7 +38,7 @@ static char	*ft_overwrite(char *line)
 	i = 0;
 	while (line[i] != '\n')
 		i++;
-	i++;	
+	i++;
 	while (i + j < ft_strlen(line) && line[i + j] != '\0')
 	{
 		str[j] = line[i + j];
@@ -60,9 +72,8 @@ static char	*ft_trim(char *line)
 	while (line[j] != '\0')
 	{
 		str[j] = line[j];
-		if (line[j] == '\n')
+		if (line[j++] == '\n')
 			break ;
-		j++;
 	}
 	return (str);
 }
