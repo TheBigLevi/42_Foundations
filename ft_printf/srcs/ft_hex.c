@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 static char	*ft_ptrstr(unsigned long n, int *k)
 {
