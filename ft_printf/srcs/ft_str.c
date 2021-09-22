@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_str.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lread <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,42 +12,28 @@
 
 #include "ft_printf.h"
 
-static t_print	*ft_table_init(void)
+void	ft_chr(t_print *table)
 {
-	t_print	*table;
+	char	c;
 
-	table = (t_print *)malloc(sizeof(t_print));
-	if (table == NULL)
-		return (NULL);
-	table->count = 0;
-	return (table);
+	c = va_arg(table->args, int);
+	ft_putchar_fd(c, 1);
+	table->count += 1;
 }
 
-int	ft_printf(const char *str, ...)
+void	ft_str(t_print *table)
 {
-	t_print	*table;
-	int		count;
+	char	*str;
 
-	table = ft_table_init();
-	if (table == NULL)
-		return (-1);
-	va_start(table->args, str);
-	while (*str != '\0')
+	str = va_arg(table->args, char *);
+	if (str != NULL)
 	{
-		if (*str != '%')
-		{
-			ft_putchar_fd(*str, 1);
-			table->count += 1;
-		}
-		else if (*str == '%')
-		{
-			ft_flags(table, str);
-			str++;
-		}
-		str++;
+		ft_putstr_fd(str, 1);
+		table->count += ft_strlen(str);
 	}
-	va_end(table->args);
-	count = table->count;
-	free(table);
-	return (count);
+	else
+	{
+		ft_putstr_fd("(null)", 1);
+		table->count += 6;
+	}
 }

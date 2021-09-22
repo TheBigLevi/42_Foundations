@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_int.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lread <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,42 +12,41 @@
 
 #include "ft_printf.h"
 
-static t_print	*ft_table_init(void)
+static void	ft_putunsigned(unsigned int n, t_print *table)
 {
-	t_print	*table;
-
-	table = (t_print *)malloc(sizeof(t_print));
-	if (table == NULL)
-		return (NULL);
-	table->count = 0;
-	return (table);
+	if (n >= 10)
+	{
+		ft_putunsigned(n / 10, table);
+		table->count += 1;
+	}
+	ft_putchar_fd((n % 10) + '0', 1);
 }
 
-int	ft_printf(const char *str, ...)
+void	ft_signed(t_print *table)
 {
-	t_print	*table;
-	int		count;
+	unsigned int	i;
+	int				n;
 
-	table = ft_table_init();
-	if (table == NULL)
-		return (-1);
-	va_start(table->args, str);
-	while (*str != '\0')
+	n = va_arg(table->args, int);
+	if (n < 0)
 	{
-		if (*str != '%')
-		{
-			ft_putchar_fd(*str, 1);
-			table->count += 1;
-		}
-		else if (*str == '%')
-		{
-			ft_flags(table, str);
-			str++;
-		}
-		str++;
+		ft_putchar_fd('-', 1);
+		table->count += 1;
+		i = -n;
 	}
-	va_end(table->args);
-	count = table->count;
-	free(table);
-	return (count);
+	else
+	{
+		i = n;
+	}
+	ft_putunsigned(i, table);
+	table->count += 1;
+}
+
+void	ft_unsigned(t_print *table)
+{
+	unsigned int	n;
+
+	n = va_arg(table->args, unsigned int);
+	ft_putunsigned(n, table);
+	table->count += 1;
 }

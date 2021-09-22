@@ -1,68 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_flags.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lread <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/22 20:43:04 by lread             #+#    #+#             */
+/*   Updated: 2021/09/22 20:43:04 by lread            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-static char	*ft_strchr(const char *str, int c)
+static void	ft_check(t_print *table, const char *str)
 {
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
+	if (*str == 'c')
+		ft_chr(table);
+	else if (*str == 's')
+		ft_str(table);
+	else if (*str == 'p')
+		ft_ptr(table);
+	else if (*str == 'd' || *str == 'i')
+		ft_signed(table);
+	else if (*str == 'u')
+		ft_unsigned(table);
+	else if (*str == 'x' || *str == 'X')
+		ft_hex(table, *str);
+	else if (*str == '%')
 	{
-		if (str[i] == c)
-			return (str + i);
-		i++;
+		ft_putchar_fd('%', 1);
 	}
-	if (c == '\0')
-		return (str + i);
-	return (NULL);
+	str++;
 }
 
-static void	ft_check(t_list *table, char *str)
+void	ft_flags(t_print *table, const char *str)
 {
-	int	i;
-
-	i = 0;
-	if (str[i] == 'c')
-		ft_print_char(table);
-	else if (str[i] == 's')
-		ft_print_str(table);
-	else if (str[i] == 'p')
-		ft_print_ptr(table);
-	else if (str[i] == 'd' || str[i] == 'i')
-		ft_print_nbr(table);
-	else if (str[i] == 'u')
-	else if (str[i] == 'x' || str[i] == 'X')
-		ft_print_hex(table);
-	else if (str[i])
-}
-
-static void	ft_format(t_list *table, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (ft_strchr("cspdiuxX%", str[i]) == 0)
+	str++;
+	if (ft_strchr("cspdiuxX", *str) == 0)
 	{
-		if (str[i] == '.')
-			table->period = 1;
-		else if (str[i] == '-')
-			table->dash = 1;
-		// TODO
-		i++;
+		ft_putchar_fd(*str, 1);
+		table->count += 1;
+		str++;
 	}
-	ft_check(table, str + i);
-}
-
-void	ft_flags(t_list *table, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
+	else
 	{
-		if (str[i] == '%')
-		{
-			ft_format(table->args, str + i);
-		}
-		i++;
+		ft_check(table, str);
 	}
 }
