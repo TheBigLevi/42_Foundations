@@ -9,12 +9,13 @@ NAME = libft.a
 
 all: $(NAME)
 
-$(NAME): server client 
+$(NAME):
 	$(MAKE) bonus -C ./libft
+	$(MAKE) server client
 	cp libft/libft.a $(NAME)
 
 server:
-	$(CC) $(CFLAGS) -I libft/includes libft/libft.a $(SRCS_SERVER) -o server
+	$(CC) $(CFLAGS) -I libft/includes libft/libft.a $(SRCS_SERVER) -o server.out
 
 client:
 	$(CC) $(CFLAGS) -I libft/includes libft/libft.a $(SRCS_CLIENT) -o client
