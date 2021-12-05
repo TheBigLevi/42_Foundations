@@ -88,11 +88,11 @@ int	convert_num(char *num)
 
 int	main(int argc, char *argv[])
 {
-	t_list *head;
+	t_stack *head;
 
 	if (argc == 1)
 		usage(1);
 	valid_input(argc - 1, argv + 1);
-	head = mk_lst(argc -1, argv + 1);
+	head = mk_lst(argc - 1, argv + 1);
 	return (1);
 }

@@ -1,38 +1,54 @@
 #include "push_swap.h"
-#include <stdio.h>
 
-static void ft_printlst(t_list *node)
+static void	ft_printlst(t_stack *head)
 {
-	// t_list	*node;
+	t_stack	*tmp;
 
-	// node = head;
-	while (node->next != NULL)
+	tmp = head;
+	while (tmp != NULL)
 	{
-		printf("&&&%d\n", *(int *)node->content);
-		node = node->next;
+		printf("%d - ", tmp->value);
+		tmp = tmp->next;
 	}
+	printf("\n");
 }
 
-t_list	*mk_lst(int argc, char *argv[])
+t_stack	*insert_at_head(t_stack **head, t_stack *node)
 {
-	t_list	*head;
-	t_list	node;
-	int		i;
-	int		num;
-	void	*ptr;
+	node->next = *head;
+	*head = node;
+	return (node);
+}
 
-	num = convert_num(argv[0]);
-	ptr = &num;
-	head = ft_lstnew(ptr);
-	node = *head;
+t_stack	*mk_node(int value)
+{
+	t_stack	*node;
+
+	node = malloc(sizeof(t_stack));
+	node->value = value;
+	node->next = NULL;
+	return (node);
+}
+
+t_stack	*mk_lst(int argc, char *argv[])
+{
+	t_stack	*head;
+	t_stack	*tmp;
+	t_stack	*tail;
+	int		i;
+
+	head = NULL;
 	i = 0;
 	while (i < argc)
 	{
-		num = convert_num(argv[i]);
-		ptr = &num;
-		printf("---%d\n", *(int *)ptr);
-		ft_lstadd_back(&head, ft_lstnew(ptr));
-		printf("***%d\n", *(int *)head->content);
+		tmp = mk_node(convert_num(argv[i]));
+		if (i == 0)
+		{
+			insert_at_head(&head, tmp);
+			tail = head;
+		}
+		tail->next = tmp;
+		tail = tail->next;
 		i++;
 	}
 	ft_printlst(head);
