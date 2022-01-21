@@ -13,3 +13,10 @@ t_philo **get_philos(void)
 
 	return (&philos);
 }
+
+t_philo *getPhilo(int i)
+{
+	if (i != get_data()->number_of_philo)
+		return (&(*get_philos())[i]);
+	return (&(*get_philos())[0]);
+}
