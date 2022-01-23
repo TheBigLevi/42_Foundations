@@ -8,6 +8,7 @@ void	ft_putstr_wtime(const char *str, int num)
 	
 	i = 0;
 	nbr = ft_itoa(get_time());
+	if (get_data()->dead == true) return;
 	while(nbr[i] != '\0')
 		i++;
 	write(1, nbr, i);
@@ -28,7 +29,7 @@ void	ft_putstr_wtime(const char *str, int num)
 void	is_doing(int num, t_enum action)
 {
 	pthread_mutex_lock(&get_data()->printing);
-	if (!get_data()->dead)
+	if (get_data()->dead != true)
 	{
 		if (action == FORK)
 			ft_putstr_wtime("has taken a fork", num);
@@ -50,10 +51,10 @@ void	is_doing(int num, t_enum action)
 
 void	try_do(t_philo *philo)
 {
-	is_doing(philo->num, FORK);
 	pthread_mutex_lock(&philo->fork);
 	is_doing(philo->num, FORK);
 	pthread_mutex_lock(&getPhilo(philo->num)->fork);
+	is_doing(philo->num, FORK);
 	if (get_data()->dead != true)
 	{
 		is_doing(philo->num, EATING);
@@ -73,8 +74,8 @@ void	*philosopher(void *arg)
 	philo = (t_philo *)arg;
 	philo_in_front = getPhilo(philo->num);
 	while (get_data()->start != true);
-	if (philo->num % 2 == 1)
-		usleep(10);
+	if (philo->num % 2 == 0)
+		usleep(1 * 1000);
 	while (get_data()->dead != true)
 	{
 		try_do(philo);
@@ -98,5 +99,6 @@ int	create_threads(int index)
 	getPhilo(index)->ready = true;
 	getPhilo(index)->dead = false;
 	getPhilo(index)->times_eaten = 0;
+	getPhilo(index)->time_since_eaten = 0;
 	return (0);
 }

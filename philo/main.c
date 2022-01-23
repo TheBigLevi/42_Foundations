@@ -38,7 +38,7 @@ static int	init_data(int argc, char *argv[])
 	if (*get_philos() == NULL)
 		return (1);
 	if (pthread_mutex_init(&(get_data()->printing), NULL) != 0)
-		return (1);
+		return (2);
 	while (i < get_data()->number_of_philo)
 	{
 		err = create_threads(i);

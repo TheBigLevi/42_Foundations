@@ -87,7 +87,6 @@ void	*monitor(void *arg)
 	while (get_data()->start != true);
 	while (philo->dead != true && get_data()->dead != true)
 	{
-
 		if ((get_time() - philo->time_since_eaten) >= get_data()->time_to_die)
 		{
 			if (get_data()->dead == true)
