@@ -13,6 +13,9 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# define PX = 1080
+# define PY = 720
+
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
