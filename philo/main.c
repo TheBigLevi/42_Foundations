@@ -3,7 +3,7 @@
 static int	usage(int i)
 {
 	if (i == 0)
-		write(1, "USAGE MSG HERE!", 16);
+		write(1, "Invalid Arguments", 16);
 	else if (i == 1)
 		write(1, "Philo thread create has failed", 25);
 	else if (i == 2)
@@ -22,7 +22,7 @@ static void	set_data(char *argv[], int argc)
 	get_data()->time_to_eat = ft_atoi(argv[2]);
 	get_data()->time_to_sleep = ft_atoi(argv[3]);
 	if (argc == 5)
-	get_data()->times_must_eat = ft_atoi(argv[4]);
+		get_data()->times_must_eat = ft_atoi(argv[4]);
 }
 
 
@@ -34,6 +34,8 @@ static int	init_data(int argc, char *argv[])
 
 	i = 0;
 	set_data(argv + 1, argc - 1);
+	if (get_data()->number_of_philo == 1)
+		return (printf("0ms 1 died"));
 	*get_philos() = malloc(sizeof(t_philo) * get_data()->number_of_philo);
 	if (*get_philos() == NULL)
 		return (1);
@@ -56,7 +58,7 @@ static int	init_data(int argc, char *argv[])
 	return (0);
 }
 
-void	exec(t_philo *arr)
+void	exec()
 {
 	int	i;
 	int	philo;
@@ -88,6 +90,6 @@ int	main(int argc, char *argv[])
 	error = init_data(argc, argv);
 	if (error != 0)
 		return (usage(error));
-	exec(*get_philos());
+	exec();
 	return (0);
 }

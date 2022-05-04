@@ -76,7 +76,7 @@ int get_time()
 {
 	struct timeval current_time;
 	gettimeofday(&current_time, NULL);
-	return (current_time.tv_usec / 1000);
+	return (current_time.tv_usec / 1000 + current_time.tv_sec * 1000);
 }
 
 void	*monitor(void *arg)
@@ -87,7 +87,7 @@ void	*monitor(void *arg)
 	while (get_data()->start != true);
 	while (philo->dead != true && get_data()->dead != true)
 	{
-		if ((get_time() - philo->time_since_eaten) >= get_data()->time_to_die)
+		if (philo->time_since_eaten >= get_data()->time_to_die)
 		{
 			if (get_data()->dead == true)
 				break;
@@ -95,9 +95,9 @@ void	*monitor(void *arg)
 			get_data()->dead = true;
 			philo->dead = true;
 			ft_putstr_wtime("died", philo->num);
+			pthread_mutex_unlock(&get_data()->printing);
 			pthread_mutex_unlock(&getPhilo(philo->num)->fork);
 		}
 	}
-	printf("Closing monit - Philo %d\n", philo->num);
 	return (NULL);
 }

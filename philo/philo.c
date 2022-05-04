@@ -7,8 +7,7 @@ void	ft_putstr_wtime(const char *str, int num)
 	char	*index;
 	
 	i = 0;
-	nbr = ft_itoa(get_time());
-	if (get_data()->dead == true) return;
+	nbr = ft_itoa(get_time() - get_data()->start_time);
 	while(nbr[i] != '\0')
 		i++;
 	write(1, nbr, i);
@@ -59,7 +58,7 @@ void	try_do(t_philo *philo)
 	{
 		is_doing(philo->num, EATING);
 		philo->times_eaten += 1;
-		philo->time_since_eaten = get_time();
+		philo->time_since_eaten = get_time() - get_data()->start_time;
 		usleep(get_data()->time_to_eat * 1000);
 	}
 	pthread_mutex_unlock(&philo->fork);
@@ -75,7 +74,7 @@ void	*philosopher(void *arg)
 	philo_in_front = getPhilo(philo->num);
 	while (get_data()->start != true);
 	if (philo->num % 2 == 0)
-		usleep(1 * 1000);
+		usleep((get_data()->time_to_eat / 2) * 1000);
 	while (get_data()->dead != true)
 	{
 		try_do(philo);
