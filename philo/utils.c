@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lread <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/11 10:58:57 by lread             #+#    #+#             */
+/*   Updated: 2022/05/11 10:59:52 by lread            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Philo.h"
 
 int	ft_atoi(const char *str)
@@ -9,7 +21,6 @@ int	ft_atoi(const char *str)
 	sign = 1;
 	i = 0;
 	val = 0;
-
 	if (str[i] == '-')
 	{
 		sign *= -1;
@@ -23,81 +34,46 @@ int	ft_atoi(const char *str)
 	return (val * sign);
 }
 
-static unsigned int	ft_numsize(int n)
+long long	get_time(void)
 {
-	unsigned int	len;
-	unsigned int	num;
+	struct timeval	current_time;
 
-	len = 0;
-	if (n < 0)
-	{
-		len += 1;
-		n *= -1;
-	}
-	num = n;
-	while (num != 0)
-	{
-		num = num / 10;
-		len++;
-	}
-	return (len);
-}
-
-char	*ft_itoa(int n)
-{
-	char			*str;
-	unsigned int	num;
-	unsigned int	len;
-
-	len = ft_numsize(n);
-	str = (char *)malloc(sizeof(char) * (len + 1));
-	if (str == NULL)
-		return (NULL);
-	if (n < 0)
-	{
-		str[0] = '-';
-		num = -n;
-	}
-	else
-		num = n;
-	if (num == 0)
-		str[0] = '0';
-	str[len + 1] = '\0';
-	while (num != 0)
-	{
-		str[len - 1] = (num % 10) + '0';
-		num = num / 10;
-		len--;
-	}
-	return (str);
-}
-
-long long	 get_time()
-{
-	struct timeval current_time;
 	gettimeofday(&current_time, NULL);
 	return ((current_time.tv_usec / 1000) + (current_time.tv_sec * 1000));
 }
 
+void	ft_usleep(int sleep)
+{
+	long	cur_time;
+
+	cur_time = get_time();
+	while (get_time() - cur_time < sleep)
+		usleep(1000);
+}
+
 void	*monitor(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (get_data()->start != true);
+	while (get_data()->start != true)
+		;
+	ft_usleep(210);
 	while (philo->dead != true && get_data()->dead != true)
 	{
+		if (get_data()->times_must_eat == philo->times_eaten)
+			break ;
 		if (get_time() - philo->time_since_eaten >= get_data()->time_to_die)
 		{
-			printf("Time since eaten: %lld\n", get_time() - philo->time_since_eaten);
 			if (get_data()->dead == true)
-				break;
+				break ;
 			pthread_mutex_lock(&get_data()->printing);
 			get_data()->dead = true;
 			philo->dead = true;
-			printf("%lldms %d died\n", get_time() - get_data()->start_time, philo->num);
+			printf("%lldms %d died\n",
+				get_time() - get_data()->start_time, philo->num);
 			pthread_mutex_unlock(&get_data()->printing);
-			pthread_mutex_unlock(&getPhilo(philo->num)->fork);
+			pthread_mutex_unlock(&get_philo(philo->num)->fork);
 		}
 	}
 	return (NULL);

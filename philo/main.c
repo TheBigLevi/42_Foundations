@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lread <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/11 11:04:11 by lread             #+#    #+#             */
+/*   Updated: 2022/05/11 11:04:20 by lread            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Philo.h"
 
 static int	usage(int i)
@@ -28,7 +40,6 @@ static void	set_data(char *argv[], int argc)
 static int	init_data(int argc, char *argv[])
 {
 	int		i;
-	int		err;
 
 	i = 0;
 	set_data(argv + 1, argc - 1);
@@ -39,25 +50,23 @@ static int	init_data(int argc, char *argv[])
 		return (1);
 	if (pthread_mutex_init(&(get_data()->printing), NULL) != 0)
 		return (2);
-	get_data()->start_time = get_time();
 	while (i < get_data()->number_of_philo)
 	{
-		err = create_threads(i);
-		if (err != 0)
+		if (create_threads(i) != 0)
 		{
 			get_data()->dead = true;
-			getPhilo(i - 1)->dead = true;
+			get_philo(i - 1)->dead = true;
 		}
 		i++;
 	}
 	if (get_data()->dead == true)
 		return (3);
-	get_data()->start = true;
 	get_data()->start_time = get_time();
+	get_data()->start = true;
 	return (0);
 }
 
-void	exec()
+void	exec(void)
 {
 	int	i;
 	int	philo;
@@ -66,18 +75,18 @@ void	exec()
 	philo = get_data()->number_of_philo;
 	while (i < philo)
 	{
-		pthread_join(getPhilo(i)->thread_id, NULL);
-		pthread_join(getPhilo(i)->monit_id, NULL);
+		pthread_join(get_philo(i)->thread_id, NULL);
+		pthread_join(get_philo(i)->monit_id, NULL);
 		i++;
 	}
 	i = 0;
 	while (i < philo)
 	{
-		pthread_mutex_destroy(&(getPhilo(i)->fork));
+		pthread_mutex_destroy(&(get_philo(i)->fork));
 		i++;
 	}
 	pthread_mutex_destroy(&get_data()->printing);
-	return;
+	return ;
 }
 
 int	main(int argc, char *argv[])
@@ -90,5 +99,6 @@ int	main(int argc, char *argv[])
 	if (error != 0)
 		return (usage(error));
 	exec();
+	printf("SIMULATION FINISHED");
 	return (0);
 }

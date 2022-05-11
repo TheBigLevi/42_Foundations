@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lread <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/11 11:13:09 by lread             #+#    #+#             */
+/*   Updated: 2022/05/11 11:13:20 by lread            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -7,8 +19,6 @@
 # include <pthread.h>
 # include <stdbool.h>
 # include <sys/time.h>
-
-
 # include <stdio.h>
 
 typedef enum s_enum {
@@ -48,12 +58,12 @@ typedef struct s_philo
 t_data		*get_data(void);
 t_philo		**get_philos(void);
 int			ft_atoi(const char *str);
-char		*ft_itoa(int n);
-t_philo		*getPhilo(int i);
+t_philo		*get_philo(int i);
 void		is_doing(int num, t_enum action);
-long long	get_time();
+long long	get_time(void);
 void		*philosopher(void *arg);
 void		*monitor(void *arg);
 int			create_threads(int i);
+void		ft_usleep(int sleep);
 
 #endif
